@@ -1,3 +1,8 @@
+<!-- TODO -->
+<!-- 1. Add userId in fetching data course for protect course suitale with pengajar -->
+<!-- 2. Change course detail layout for pelajar (enrollment, claim certificate, etc) -->
+<!-- 3. add discussion -->
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

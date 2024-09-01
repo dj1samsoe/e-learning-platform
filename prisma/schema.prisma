@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String       @id @default(uuid())
+  email          String       @unique
+  name           String
+  password       String       
+  imageUrl       String?      @db.Text
+  role           UserRole
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  courses        CourseEnrollment[]
+  createdCourses Course[]
+
+  discussions    Discussion[]
+  discussionReplies DiscussionReply[]
+  certificates   Certificate[]
+  progress       UserProgress[]
+}
+
+model Course {
+  id          String           @id @default(uuid())
+  title       String           @db.Text
+  description String?          @db.Text
+  imageUrl    String?          @db.Text
+  teacherId   String
+  teacher     User             @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  categoryId  String?
+  category    Category?        @relation(fields: [categoryId], references: [id])
+  chapters    Chapter[]
+  students    CourseEnrollment[]
+  certificates Certificate[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([categoryId])
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  courses  Course[]
+}
+
+model Chapter {
+  id        String   @id @default(uuid())
+  title     String
+  description String? @db.Text
+  videoUrl  String?  @db.Text
+  position  Int
+  muxData   MuxData?
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userProgress UserProgress[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model MuxData {
+  id        String   @id @default(uuid())
+  assetId   String
+  playbackId String?
+
+  chapterId String   @unique
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id        String   @id @default(uuid())
+  isCompleted Boolean @default(false)
+  
+  chapterId String
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([chapterId])
+  @@unique([userId, chapterId])
+}
+
+model CourseEnrollment {
+  id            String       @id @default(uuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId      String
+  course        Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress      Float        @default(0.0) // Persentase progress per course
+  completed     Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+
+  @@unique([userId, courseId]) // Ensuring that a user can enroll in a course only once
+  @@index([userId])
+  @@index([courseId])
+}
+
+model Certificate {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  issuedAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([courseId])
+}
+
+model Discussion {
+  id         String           @id @default(uuid())
+  title      String
+  content    String
+  categoryId String
+  category   DiscussionCategory @relation(fields: [categoryId], references: [id])
+  authorId   String
+  author     User             @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  replies    DiscussionReply[]
+
+  @@index([categoryId])
+  @@index([authorId])
+}
+
+model DiscussionReply {
+  id           String   @id @default(uuid())
+  content      String
+  discussionId String
+  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  authorId     String
+  author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([discussionId])
+  @@index([authorId])
+}
+
+model DiscussionCategory {
+  id           String       @id @default(uuid())
+  name         String
+  discussions  Discussion[]
+}
+
+enum UserRole {
+  PELAJAR
+  PENGAJAR
+}
