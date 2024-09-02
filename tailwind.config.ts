@@ -28,6 +28,7 @@ const config = withUt({
         black: "#212121",
         blue: "#29616E",
         gray: "#CDD5DF",
+        yellow: "#E4AA00",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

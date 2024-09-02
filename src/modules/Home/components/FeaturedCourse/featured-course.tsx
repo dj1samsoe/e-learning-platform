@@ -10,14 +10,37 @@ import {
 
 export default function FeaturedCourse() {
   return (
-    <section className="w-full md:px-16 px-5 md:py-16 py-8 flex flex-col space-y-5 items-center">
+    <section
+      className="w-full md:px-16 px-5 md:py-16 py-8 flex flex-col space-y-5 items-center"
+      id="kelas-pilihan"
+    >
       <h1 className="font-bold text-3xl">Kelas Pilihan</h1>
       <Tabs defaultValue="klhs" className="w-full">
         <TabsList className="flex md:flex-nowrap flex-wrap w-full items-center justify-center gap-4 mx-auto">
-          <TabsTrigger value="klhs">KLHS</TabsTrigger>
-          <TabsTrigger value="rpjpd">RPJPD</TabsTrigger>
-          <TabsTrigger value="rpjmd">RPJMD</TabsTrigger>
-          <TabsTrigger value="adhoc">Dokumen AdHoc</TabsTrigger>
+          <TabsTrigger
+            value="klhs"
+            className="data-[state=active]:bg-blue data-[state=active]:text-white"
+          >
+            KLHS
+          </TabsTrigger>
+          <TabsTrigger
+            value="rpjpd"
+            className="data-[state=active]:bg-orange data-[state=active]:text-white"
+          >
+            RPJPD
+          </TabsTrigger>
+          <TabsTrigger
+            value="rpjmd"
+            className="data-[state=active]:bg-cream data-[state=active]:text-black"
+          >
+            RPJMD
+          </TabsTrigger>
+          <TabsTrigger
+            value="adhoc"
+            className="data-[state=active]:bg-yellow data-[state=active]:text-black"
+          >
+            Dokumen AdHoc
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="klhs">
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">

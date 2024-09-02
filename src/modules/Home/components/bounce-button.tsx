@@ -2,10 +2,10 @@ import React from "react";
 import { FaAnglesDown } from "react-icons/fa6";
 
 const onClick = () => {
-  window.scrollTo({
-    top: 850,
-    behavior: "smooth",
-  });
+  const targetElement = document.getElementById("kelas-pilihan");
+  if (targetElement) {
+    targetElement.scrollIntoView({ behavior: "smooth" });
+  }
 };
 
 const BounceButton = () => {

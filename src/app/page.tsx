@@ -1,6 +1,8 @@
 import { METADATA } from "@/constant/metadata";
 import HomePage from "@/modules/Home";
 import { Metadata } from "next";
+// import { Suspense } from "react";
+// import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: `E-Learning ${METADATA.exTitle}`,
@@ -10,5 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <HomePage />;
+  return (
+    // <Suspense fallback={<Loading />}>
+    <HomePage />
+    // </Suspense>
+  );
 }
