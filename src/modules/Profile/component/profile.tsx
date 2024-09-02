@@ -12,7 +12,7 @@ import {
 } from "../../../../actions/get-profile";
 import { prisma } from "@/lib/prisma";
 import { getProgress } from "../../../../actions/get-progress";
-import Link from "next/link";
+import CreateButton from "./CreatedCourse/create-button";
 
 export default async function ProfilePage() {
   const session = await getUserSession();
@@ -67,7 +67,10 @@ export default async function ProfilePage() {
       {userCourse?.length > 0 || createdCourses?.length > 0 ? (
         <Card className="max-w-5xl mx-auto">
           <CardContent className="w-full flex flex-col items-start space-y-4 pt-6">
-            <h1 className="font-bold text-xl">Kelas Saya</h1>
+            <div className="w-full flex items-center justify-between">
+              <h1 className="font-bold text-xl">Kelas Saya</h1>
+              {session?.user?.role === "PENGAJAR" && <CreateButton />}
+            </div>
             {session?.user?.role === "PENGAJAR" ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {createdCourses.map((course) => (
