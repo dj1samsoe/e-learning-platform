@@ -20,7 +20,7 @@ import { Assets } from "../../../../../public";
 export default function RegisterForm() {
   const { form, isPending, onSubmit } = useRegisterForm();
   return (
-    <div className="flex h-[80vh] flex-col items-center justify-center px-4">
+    <div className="flex h-[80vh] flex-col items-center justify-center px-4 mt-10">
       <div className="flex w-full flex-col justify-center space-y-8 rounded-xl bg-white p-8 shadow-md dark:bg-neutral-950 md:w-max md:min-w-[30rem]">
         <Image
           src={Assets.Logo}

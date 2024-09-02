@@ -15,7 +15,7 @@ const BounceButton = () => {
       onClick={onClick}
     >
       <FaAnglesDown size={50} />
-      <p className="italic text-md">Scroll ke bawah</p>
+      <p className="italic text-md">Gulir ke bawah</p>
     </div>
   );
 };
